@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {ToDoList} from './ToDoList';
 import {v1} from 'uuid'
+import AddItemForm from './AddItemForm';
 
 export type TaskType = {
     id: string
@@ -63,6 +64,18 @@ function removeToDoList(toDoListID:string) {
         setTasks({...tasks})
     }
 
+    function  addToDoList(title:string) {
+        const newToDoListId = v1()
+        const  newToDoList:ToDoListsType = {
+            id: newToDoListId,
+            title: title,
+            filter: "all"
+        }
+        setToDoLists([...toDoLists, newToDoList])
+        setTasks({...tasks, [newToDoListId]: []
+    })
+    }
+
 function changeFilter(value: FilterValuesType,toDoListID:string) {
   let toDoList = toDoLists.find(tl=> tl.id===toDoListID)
   if (toDoList) {
@@ -80,9 +93,24 @@ function  changeStatus(taskId: string, isDone:boolean,toDoListID:string) {
 
     }
    }
-
+   function changeTaskTitle(taskId: string, title:string,toDoListID:string) {
+   const toDoListsTasks =  tasks[toDoListID]
+   const task = toDoListsTasks.find(task=> task.id===taskId)
+   if (task) {
+       task.title=title
+       setTasks({...tasks})
+   }
+    }
+function changeToDoListTitle(toDoListID:string, title:string) {
+   const toDoList = toDoLists.find(tl=> tl.id===toDoListID)
+   if(toDoList) {
+       toDoList.title=title
+       setToDoLists([...toDoLists])
+   }
+}
     return (
         <div className="App">
+            <AddItemForm addItem={addToDoList}/>
             {
                 toDoLists.map(tl => {
                     let tasksForToDoList = tasks[tl.id];
@@ -104,6 +132,8 @@ function  changeStatus(taskId: string, isDone:boolean,toDoListID:string) {
                             changeFilter={changeFilter}
                             changeStatus={changeStatus}
                             removeToDoList={removeToDoList}
+                            changeTaskTitle={changeTaskTitle}
+                            changeToDoListTitle={changeToDoListTitle}
                         />
                         )
                 })
