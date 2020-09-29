@@ -1,20 +1,3 @@
-.App {
-  padding: 30px;
-  display: flex;
-}
+.is-done{
 
-.App > div {
-  margin-right: 50px;
-}
-.error {
-  border: red 1px solid;
-}
-.error-message {
-  color:red;
-}
-.active-filter {
-  background-color: mediumaquamarine;
-}
-.is-done {
-  opacity: 0.5;
 }

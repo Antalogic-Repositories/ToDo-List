@@ -3,6 +3,8 @@ import './App.css';
 import {ToDoList} from './ToDoList';
 import {v1} from 'uuid'
 import AddItemForm from './AddItemForm';
+import {Menu} from '@material-ui/icons';
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 
 export type TaskType = {
     id: string
@@ -52,6 +54,7 @@ function removeToDoList(toDoListID:string) {
 }
 
     function  addTask(title: string, toDoListID:string) {
+        debugger
         let toDoListTasks = tasks[toDoListID]
         let newTask: TaskType = { id: v1(), title: title, isDone: false}
         tasks[toDoListID] = [newTask,...toDoListTasks]
@@ -109,8 +112,24 @@ function changeToDoListTitle(toDoListID:string, title:string) {
    }
 }
     return (
+
         <div className="App">
-            <AddItemForm addItem={addToDoList}/>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton edge="start"  color="inherit" aria-label="menu">
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant="h6">
+                        News
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Grid style={{padding:'15px'}}>
+                    <AddItemForm addItem={addToDoList}/>
+                </Grid>
+            <Grid container={true} spacing={5}>   {/* //строка*/}
             {
                 toDoLists.map(tl => {
                     let tasksForToDoList = tasks[tl.id];
@@ -121,8 +140,10 @@ function changeToDoListTitle(toDoListID:string, title:string) {
                         tasksForToDoList = tasks[tl.id].filter(t => t.isDone === true)
                     }
                     return (
+
+                        <Grid item={true} key={tl.id} > {/* //ячейки*/}
+                        <Paper style={{padding:"15px"}} elevation={3}>
                         <ToDoList
-                            key={tl.id}
                             id={tl.id}
                             title={tl.title}
                             tasks={tasksForToDoList}
@@ -135,9 +156,12 @@ function changeToDoListTitle(toDoListID:string, title:string) {
                             changeTaskTitle={changeTaskTitle}
                             changeToDoListTitle={changeToDoListTitle}
                         />
+                        </Paper>
+                </Grid>
                         )
                 })
-            }
+            } </Grid>
+            </Container>
         </div>
     );
 }
