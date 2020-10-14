@@ -27,6 +27,7 @@ export type taskStateType = {
 function App() {
     let toDoListID1 = v1()
     let toDoListID2 = v1()
+
     let [toDoLists, setToDoLists] = useState<Array<ToDoListsType>>([
         {id: toDoListID1, title: 'What to learn', filter: 'all'},
         {id: toDoListID2, title: 'What to buy', filter: 'all'},
