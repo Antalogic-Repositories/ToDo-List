@@ -4,6 +4,9 @@ import AddItemForm from './AddItemForm';
 import EditAbleSpan from './EditAbleSpan';
 import {Button, Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
+import {useSelector} from 'react-redux';
+import {AppRootStateType} from './state/store';
+import {taskStateType} from './AppWithRedux';
 
 type PropsType = {
     id: string
@@ -20,6 +23,7 @@ type PropsType = {
 }
 
 export function ToDoList(props: PropsType) {
+
     const tasks =  props.tasks.map(t => {
         const removeTask = () => {
             props.removeTask(t.id, props.id)

@@ -38,9 +38,18 @@ export type ChangeTaskTitleActionType = {
 //reducer принимает state & action возвращает newState
 //action содержит необходимые превращения и нужные для него данные
 //creator для вызова action
+let initialState:taskStateType= {
+    ['toDoListID1']: [{id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: false},
+        {id: v1(), title: 'React', isDone: true},
+    ],
+    ['toDoListID2']: [{id: v1(), title: 'grape', isDone: true},
+        {id: v1(), title: 'bread', isDone: false},
+        {id: v1(), title: 'butter', isDone: true},
+    ],
+}
 
-
-export const tasksReducer = (state: taskStateType, action: ActionType) => {
+export const tasksReducer = (state: taskStateType=initialState, action: ActionType) => {
     switch (action.type) {
         case 'REMOVE-TASK':
             /*let copyState = {...state}
@@ -76,7 +85,7 @@ export const tasksReducer = (state: taskStateType, action: ActionType) => {
             return copyState
         }
         default:
-            throw new Error('I don\'t understand this type')
+            return state
     }
 }
 //чистые функций

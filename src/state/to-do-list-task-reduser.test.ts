@@ -17,7 +17,6 @@ test('ids should be equals', () => {
     const idFromTodolists = endTodolistsState[0].id;
 
     expect(idFromTasks).toBe(idFromTodolists);
-
     expect(idFromTasks).toBe(action.id);
     expect(idFromTodolists).toBe(action.id)
 });
