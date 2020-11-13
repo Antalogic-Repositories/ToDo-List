@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button, IconButton, TextField} from '@material-ui/core';
-import {AddBox, TextFields} from '@material-ui/icons';
+import {IconButton, TextField} from '@material-ui/core';
+import {AddBox} from '@material-ui/icons';
 
 
 type  AddItemFormPropsType = {
@@ -8,15 +8,13 @@ type  AddItemFormPropsType = {
 }
 
 
-function AddItemForm(props: AddItemFormPropsType) {
-
-    const addItem = props.addItem
+export const AddItemForm=React.memo((props: AddItemFormPropsType) =>{
+    console.log('sfdf')
 
     let [title, setTitle] = useState<string>('');
     let [error, setError] = useState<string | null>(null);
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null);
         setTitle(e.currentTarget.value)
     }
 
@@ -46,13 +44,11 @@ function AddItemForm(props: AddItemFormPropsType) {
                 helperText={error}
                 error={!!error}//строку в лог значение, в итоге дает тру
             />
-            {/*<button onClick={onAddTaskClick}>+</button>*/}
-           {/* <Button onClick={onAddTaskClick} variant={"contained"} color={"primary"}>+</Button>*/}
             <IconButton onClick={onAddTaskClick}  color={"primary"}><AddBox/></IconButton>
             {error && <div className={'error-message'}>{error}</div>}
         </div>
     )
-};
+});
 
 
 export default AddItemForm;

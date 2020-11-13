@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import {FilterValuesType, TaskType} from './App';
 import AddItemForm from './AddItemForm';
 import EditAbleSpan from './EditAbleSpan';
@@ -22,9 +22,10 @@ type PropsType = {
     changeToDoListTitle:(toDoListID:string, title:string)=>void
 }
 
-export function ToDoList(props: PropsType) {
+export const ToDoList =React.memo( function(props: PropsType) {
 
     const tasks =  props.tasks.map(t => {
+        //нельзя оборачивать useCallback!!! потому что хуки нельзя использовать в циклах, мапах и т.д
         const removeTask = () => {
             props.removeTask(t.id, props.id)
         };
@@ -40,38 +41,31 @@ export function ToDoList(props: PropsType) {
                          onChange={changeStatus}
                           />
 
-               {/* <input
-                    type="checkbox"
-                    checked={t.isDone}
-                    onChange={changeStatus}
-
-                />*/}
                 <EditAbleSpan value={t.title}
                               changeValue={changeTaskTitle}
                 />
                 <IconButton onClick={removeTask}><Delete/></IconButton>
-                {/*<button onClick={removeTask}>x</button>*/}
             </li>
         )
     })
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         props.addTask( title, props.id)
-    }
+    },[props.title,props.id])
 
-    const changeToDoListTitle=( title:string) => {
+    const changeToDoListTitle=useCallback(( title:string) => {
         props.changeToDoListTitle(title, props.id)
-    }
+    },[props.title,props.id])
 
-    const onAllClickHandler = () => {
+    const onAllClickHandler = useCallback(() => {
         props.changeFilter('all', props.id)
-    }
-    const onActiveClickHandler = () => {
+    },[props.changeFilter,props.id])
+    const onActiveClickHandler = useCallback(() => {
         props.changeFilter('active', props.id)
-    }
-    const onCompletedClickHandler = () => {
+    },[props.changeFilter,props.id])
+    const onCompletedClickHandler = useCallback(() => {
         props.changeFilter('completed', props.id)
-    }
+    },[props.changeFilter,props.id])
     return (
         <div>
             <h3>
@@ -80,10 +74,6 @@ export function ToDoList(props: PropsType) {
                     props.removeToDoList(props.id)
                 }} ><Delete/></IconButton>
 
-                {/*<button onClick={() => {
-                    props.removeToDoList(props.id)
-                }}>X
-                </button>*/}
             </h3>
             <AddItemForm addItem={addTask}/>
             <ul>
@@ -93,7 +83,7 @@ export function ToDoList(props: PropsType) {
                 <Button variant={"contained"}
                         style={{margin:"5px"}}
                         color={props.filter === 'all' ? 'primary' : 'default'}
-                       /* className={props.filter === 'all' ? 'active-filter' : ''}*/ onClick={onAllClickHandler}>All
+                       onClick={onAllClickHandler}>All
                 </Button>
                 <Button variant={"contained"}
                         style={{margin:"5px"}}
@@ -107,4 +97,4 @@ export function ToDoList(props: PropsType) {
                 </Button>
             </div>
         </div>)
-}
+})
