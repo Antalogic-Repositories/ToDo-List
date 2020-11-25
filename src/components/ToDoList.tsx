@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {FilterValuesType, TaskType} from './App';
+import {FilterValuesType, TaskType} from '../App';
 import AddItemForm from './AddItemForm';
 import EditAbleSpan from './EditAbleSpan';
 import {Button, IconButton} from '@material-ui/core';
@@ -21,28 +21,22 @@ type PropsType = {
 }
 
 export const ToDoList = React.memo(function (props: PropsType) {
-    console.log('Todolist Called')
-
 
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
-    }, [props])
-
+    }, [props.addTask, props.id])
     const changeToDoListTitle = useCallback((title: string) => {
         props.changeToDoListTitle(title, props.id)
-    }, [props])
-    //props.title?
-
+    }, [props.changeToDoListTitle, props.id])
     const onAllClickHandler = useCallback(() => {
         props.changeFilter('all', props.id)
-    }, [props])
-    //[props.changeFilter,props.id]
+    }, [props.changeFilter, props.id])
     const onActiveClickHandler = useCallback(() => {
         props.changeFilter('active', props.id)
-    }, [props])
+    }, [props.changeFilter, props.id])
     const onCompletedClickHandler = useCallback(() => {
         props.changeFilter('completed', props.id)
-    }, [props])
+    }, [props.changeFilter, props.id])
 
 
     let tasksForTodolist = props.tasks;
@@ -64,19 +58,15 @@ export const ToDoList = React.memo(function (props: PropsType) {
 
             </h3>
             <AddItemForm addItem={addTask}/>
-            <ul>
-                {tasksForTodolist.map(t => {
-                    //нельзя оборачивать useCallback!!! потому что хуки нельзя использовать в циклах, мапах и т.д
-                    return (
-                        <Task key={t.id}
-                              task={t}
-                              toDoListID={props.id}
-                              removeTask={props.removeTask}
-                              changeStatus={props.changeStatus}
-                              changeTaskTitle={props.changeTaskTitle}/>
-                    )
-                })}
-            </ul>
+            <div>
+                {tasksForTodolist.map(t => <Task
+                    key={t.id}
+                    task={t}
+                    toDoListID={props.id}
+                    removeTask={props.removeTask}
+                    changeStatus={props.changeStatus}
+                    changeTaskTitle={props.changeTaskTitle}/>)}
+            </div>
             <div>
                 <Button variant={'contained'}
                         style={{margin: '5px'}}

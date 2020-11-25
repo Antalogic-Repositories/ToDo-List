@@ -39,17 +39,18 @@ export type ChangeTaskTitleActionType = {
 //action содержит необходимые превращения и нужные для него данные
 //creator для вызова action
 let initialState: taskStateType = {
-    ['toDoListID1']: [{id: v1(), title: 'HTML&CSS', isDone: true},
+    /*['toDoListID1']: [{id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: false},
         {id: v1(), title: 'React', isDone: true},
     ],
     ['toDoListID2']: [{id: v1(), title: 'grape', isDone: true},
         {id: v1(), title: 'bread', isDone: false},
         {id: v1(), title: 'butter', isDone: true},
-    ],
+    ],*/
+    count:[]
 }
 
-export const tasksReducer = (state: taskStateType = initialState, action: ActionType) => {
+export const tasksReducer = (state: taskStateType = initialState, action: ActionType):taskStateType => {
     switch (action.type) {
         case 'REMOVE-TASK':
             return {...state, [action.todoListID]: state[action.todoListID].filter(t => t.id !== action.taskID)}

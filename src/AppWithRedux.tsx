@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {ToDoList} from './ToDoList';
-import AddItemForm from './AddItemForm';
+import {ToDoList} from './components/ToDoList';
+import AddItemForm from './components/AddItemForm';
 import {Menu} from '@material-ui/icons';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {

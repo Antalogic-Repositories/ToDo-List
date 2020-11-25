@@ -26,10 +26,7 @@ type ChangeFilterTodolistActionType = {
 //reducer принимает state & action возвращает newState
 //action содержит необходимые превращения и нужные для него данные
 //creator для вызова action
-let initialState:Array<ToDoListsType> = [
-    {id: 'toDoListID1', title: 'What to learn', filter: 'all'},
-    {id: 'toDoListID2', title: 'What to buy', filter: 'all'},
-]
+let initialState:Array<ToDoListsType> = []
 
 export const todolistsReducer = (state:Array<ToDoListsType>=initialState, action: ActionType) => {
     switch (action.type) {

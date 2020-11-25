@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import './App.css';
-import {ToDoList} from './ToDoList';
+import {ToDoList} from './components/ToDoList';
 import {v1} from 'uuid'
-import AddItemForm from './AddItemForm';
+import AddItemForm from './components/AddItemForm';
 import {Menu} from '@material-ui/icons';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 
@@ -33,17 +33,14 @@ function App() {
         {id: toDoListID2, title: 'What to buy', filter: 'all'},
     ])
     let [tasks, setTasks] = useState<taskStateType>({
-        [toDoListID1]: [{id: v1(), title: 'HTML&CSS', isDone: true},
+        [toDoListID1]:
+            [{id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: false},
-            {id: v1(), title: 'React', isDone: true},
-            {id: v1(), title: 'GraphQL', isDone: true},
-            {id: v1(), title: 'Rest API', isDone: true}
         ],
-        [toDoListID2]: [{id: v1(), title: 'grape', isDone: true},
+        [toDoListID2]:
+            [{id: v1(), title: 'grape', isDone: true},
             {id: v1(), title: 'bread', isDone: false},
-            {id: v1(), title: 'butter', isDone: true},
-            {id: v1(), title: 'sweet', isDone: true},
-            {id: v1(), title: 'milk', isDone: true}
+
         ],
 
     })
@@ -134,16 +131,18 @@ function App() {
                 <Grid container={true} spacing={5}>   {/* //строка*/}
                     {
                         toDoLists.map(tl => {
-                            let tasksForToDoList = tasks[tl.id];
+                            let allTodolistTasks = tasks[tl.id];
+                            let tasksForToDoList = allTodolistTasks;
+
                             if (tl.filter === 'active') {
-                                tasksForToDoList = tasks[tl.id].filter(t => t.isDone === false)
+                                tasksForToDoList = allTodolistTasks.filter(t => t.isDone === false)
                             }
                             if (tl.filter === 'completed') {
-                                tasksForToDoList = tasks[tl.id].filter(t => t.isDone === true)
+                                tasksForToDoList = allTodolistTasks.filter(t => t.isDone === true)
                             }
                             return (
 
-                                <Grid item={true} key={tl.id}> {/* //ячейки*/}
+                                <Grid item> {/* //ячейки*/}
                                     <Paper style={{padding: '15px'}} elevation={3}>
                                         <ToDoList
                                             id={tl.id}

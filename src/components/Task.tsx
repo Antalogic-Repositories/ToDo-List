@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import {Checkbox, IconButton} from '@material-ui/core';
 import EditAbleSpan from './EditAbleSpan';
 import {Delete} from '@material-ui/icons';
-import {TaskType} from './App';
+import {TaskType} from '../App';
 
 type  TaskPropsType = {
     task: TaskType,
