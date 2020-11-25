@@ -1,12 +1,10 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {FilterValuesType, TaskType} from './App';
 import AddItemForm from './AddItemForm';
 import EditAbleSpan from './EditAbleSpan';
-import {Button, Checkbox, IconButton} from '@material-ui/core';
+import {Button, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
-import {useSelector} from 'react-redux';
-import {AppRootStateType} from './state/store';
-import {taskStateType} from './AppWithRedux';
+import Task from './Task';
 
 type PropsType = {
     id: string
@@ -17,81 +15,81 @@ type PropsType = {
     removeTask: (taskID: string, toDoListID: string) => void
     changeStatus: (taskId: string, isDone: boolean, toDoListID: string) => void
     removeToDoList: (toDoListID: string) => void
-    changeTaskTitle:(taskId: string, title:string,toDoListID:string)=>void,
+    changeTaskTitle: (taskId: string, title: string, toDoListID: string) => void,
     changeFilter: (value: FilterValuesType, toDoListID: string) => void,
-    changeToDoListTitle:(toDoListID:string, title:string)=>void
+    changeToDoListTitle: (toDoListID: string, title: string) => void
 }
 
-export const ToDoList =React.memo( function(props: PropsType) {
+export const ToDoList = React.memo(function (props: PropsType) {
+    console.log('Todolist Called')
 
-    const tasks =  props.tasks.map(t => {
-        //нельзя оборачивать useCallback!!! потому что хуки нельзя использовать в циклах, мапах и т.д
-        const removeTask = () => {
-            props.removeTask(t.id, props.id)
-        };
-        const changeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeStatus(t.id, e.currentTarget.checked, props.id)
-        }
-        const changeTaskTitle=(value:string)=>{
-            props.changeTaskTitle(t.id, value, props.id )
-        }
-        return (
-            <li key={t.id} className={t.isDone ? 'is-done' : ''}>
-              <Checkbox  checked={t.isDone}
-                         onChange={changeStatus}
-                          />
-
-                <EditAbleSpan value={t.title}
-                              changeValue={changeTaskTitle}
-                />
-                <IconButton onClick={removeTask}><Delete/></IconButton>
-            </li>
-        )
-    })
 
     const addTask = useCallback((title: string) => {
-        props.addTask( title, props.id)
-    },[props.title,props.id])
+        props.addTask(title, props.id)
+    }, [props])
 
-    const changeToDoListTitle=useCallback(( title:string) => {
+    const changeToDoListTitle = useCallback((title: string) => {
         props.changeToDoListTitle(title, props.id)
-    },[props.title,props.id])
+    }, [props])
+    //props.title?
 
     const onAllClickHandler = useCallback(() => {
         props.changeFilter('all', props.id)
-    },[props.changeFilter,props.id])
+    }, [props])
+    //[props.changeFilter,props.id]
     const onActiveClickHandler = useCallback(() => {
         props.changeFilter('active', props.id)
-    },[props.changeFilter,props.id])
+    }, [props])
     const onCompletedClickHandler = useCallback(() => {
         props.changeFilter('completed', props.id)
-    },[props.changeFilter,props.id])
+    }, [props])
+
+
+    let tasksForTodolist = props.tasks;
+
+    if (props.filter === 'active') {
+        tasksForTodolist = tasksForTodolist.filter(t => !t.isDone);
+    }
+    if (props.filter === 'completed') {
+        tasksForTodolist = tasksForTodolist.filter(t => t.isDone);
+    }
+
     return (
         <div>
             <h3>
                 <EditAbleSpan value={props.title} changeValue={changeToDoListTitle}/>
                 <IconButton onClick={() => {
                     props.removeToDoList(props.id)
-                }} ><Delete/></IconButton>
+                }}><Delete/></IconButton>
 
             </h3>
             <AddItemForm addItem={addTask}/>
             <ul>
-                { tasks }
+                {tasksForTodolist.map(t => {
+                    //нельзя оборачивать useCallback!!! потому что хуки нельзя использовать в циклах, мапах и т.д
+                    return (
+                        <Task key={t.id}
+                              task={t}
+                              toDoListID={props.id}
+                              removeTask={props.removeTask}
+                              changeStatus={props.changeStatus}
+                              changeTaskTitle={props.changeTaskTitle}/>
+                    )
+                })}
             </ul>
             <div>
-                <Button variant={"contained"}
-                        style={{margin:"5px"}}
+                <Button variant={'contained'}
+                        style={{margin: '5px'}}
                         color={props.filter === 'all' ? 'primary' : 'default'}
-                       onClick={onAllClickHandler}>All
+                        onClick={onAllClickHandler}>All
                 </Button>
-                <Button variant={"contained"}
-                        style={{margin:"5px"}}
+                <Button variant={'contained'}
+                        style={{margin: '5px'}}
                         className={props.filter === 'active' ? 'active-filter' : ''}
                         onClick={onActiveClickHandler}>Active
                 </Button>
-                <Button variant={"contained"}
-                        style={{margin:"5px"}}
+                <Button variant={'contained'}
+                        style={{margin: '5px'}}
                         className={props.filter === 'completed' ? 'active-filter' : ''}
                         onClick={onCompletedClickHandler}>Completed
                 </Button>

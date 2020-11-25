@@ -38,7 +38,7 @@ export type ChangeTaskTitleActionType = {
 //reducer принимает state & action возвращает newState
 //action содержит необходимые превращения и нужные для него данные
 //creator для вызова action
-let initialState:taskStateType= {
+let initialState: taskStateType = {
     ['toDoListID1']: [{id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: false},
         {id: v1(), title: 'React', isDone: true},
@@ -49,48 +49,65 @@ let initialState:taskStateType= {
     ],
 }
 
-export const tasksReducer = (state: taskStateType=initialState, action: ActionType) => {
+export const tasksReducer = (state: taskStateType = initialState, action: ActionType) => {
     switch (action.type) {
         case 'REMOVE-TASK':
-            /*let copyState = {...state}
-            copyState[action.todoListID] = copyState[action.todoListID].filter(t => t.id !==action.taskID)*/
             return {...state, [action.todoListID]: state[action.todoListID].filter(t => t.id !== action.taskID)}
         case 'ADD-TASK': {
             let newTask = {id: v1(), title: action.title, isDone: false}
             return {...state, [action.todoListID]: [newTask, ...state[action.todoListID]]}
         }
         case 'CHANGE-STATUS': {
-            let toDoListTasks = state[action.todoListID];
-            let task = toDoListTasks.find(t => t.id === action.taskID)
+            let todolistTasks = state[action.todoListID];
+            // найдём нужную таску:
+            let task = todolistTasks.find(t => t.id === action.taskID);
+            //изменим таску, если она нашлась
             if (task) {
                 task.isDone = action.isDone;
             }
-            return {...state, [action.todoListID]: toDoListTasks}
+            state[action.todoListID] = [...state[action.todoListID]]
+            return {
+                ...state,
+                [action.todoListID]: state[action.todoListID].map(task => {
+                    if (task.id !== action.taskID) return task
+                    else return {...task, isDone: action.isDone}
+                })
+            };
         }
+
         case 'CHANGE-TITLE': {
             let toDoListTasks = state[action.todoListID];
             let task = toDoListTasks.find(t => t.id === action.taskID)
             if (task) {
                 task.title = action.title;
             }
-            return {...state, [action.todoListID]: toDoListTasks}
+            //копия стэйта
+            //[action.todoListID] меняем ссылку на обьект
+
+            state[action.todoListID] = [...state[action.todoListID]]
+//глубокое копирование!!!!!изучить!!!!!
+            return {
+                ...state,
+                [action.todoListID]: state[action.todoListID].map(task => {
+                    if (task.id !== action.taskID) return task
+                    else return {...task, title: action.title}
+                })
+            };
         }
         case 'ADD-TODOLIST': {
             let id = v1()
             return {...state, [action.id]: []}
         }
         case 'REMOVE-TODOLIST': {
-            let copyState={...state}
-            delete  copyState[action.id]
+            let copyState = {...state}
+            delete copyState[action.id]
             return copyState
         }
         default:
             return state
     }
 }
-//чистые функций
-//cоздание обьетка экшион//ACTION CREATOR
-// REDUCER - функция которая содержит в себе все что может пройзойти со state
+
 
 export const removeTaskAC = (taskID: string, todoListID: string): ActionType1 => {
     return {type: 'REMOVE-TASK', taskID: taskID, todoListID: todoListID}

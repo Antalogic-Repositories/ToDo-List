@@ -8,8 +8,8 @@ type  AddItemFormPropsType = {
 }
 
 
-export const AddItemForm=React.memo((props: AddItemFormPropsType) =>{
-    console.log('sfdf')
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+    console.log('AddItem form called')
 
     let [title, setTitle] = useState<string>('');
     let [error, setError] = useState<string | null>(null);
@@ -29,6 +29,9 @@ export const AddItemForm=React.memo((props: AddItemFormPropsType) =>{
     }
 
     const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
+            setError(null)
+        }
         if (e.ctrlKey && e.key === 'Enter') {
             onAddTaskClick()
         }
@@ -40,11 +43,11 @@ export const AddItemForm=React.memo((props: AddItemFormPropsType) =>{
                 value={title}
                 onChange={onChangeHandler}
                 onKeyUp={onKeyUpHandler}
-                label={"title"}
+                label={'title'}
                 helperText={error}
                 error={!!error}//строку в лог значение, в итоге дает тру
             />
-            <IconButton onClick={onAddTaskClick}  color={"primary"}><AddBox/></IconButton>
+            <IconButton onClick={onAddTaskClick} color={'primary'}><AddBox/></IconButton>
             {error && <div className={'error-message'}>{error}</div>}
         </div>
     )

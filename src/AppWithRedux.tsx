@@ -55,7 +55,8 @@ function AppWithRedux() {
     const removeToDoList= useCallback((toDoListID: string)=> {
         dispatch(RemoveToDoListAC(toDoListID))
     },[dispatch])
-
+    //action creator
+//от параметров не зависим
     const  addToDoList=useCallback((title: string)=>{
         let action = AddToDoListAC(title)
         dispatch(action)
@@ -89,13 +90,7 @@ function AppWithRedux() {
                 <Grid container={true} spacing={5} >   {/* //строка*/}
                     {
                         toDoLists.map(tl => {
-                            let tasksForToDoList = tasks[tl.id];
-                            if (tl.filter === 'active') {
-                                tasksForToDoList = tasks[tl.id].filter(t => t.isDone === false)
-                            }
-                            if (tl.filter === 'completed') {
-                                tasksForToDoList = tasks[tl.id].filter(t => t.isDone === true)
-                            }
+                            let allTodolistTasks = tasks[tl.id]
                             return (
 
                                 <Grid item={true} key={tl.id}> {/* //ячейки*/}
@@ -104,7 +99,7 @@ function AppWithRedux() {
                                             id={tl.id}
                                             title={tl.title}
                                             filter={tl.filter}
-                                            tasks={tasksForToDoList}
+                                            tasks={allTodolistTasks}
                                             addTask={addTask}
                                             removeTask={removeTask}
                                             changeFilter={changeFilter}
