@@ -21,6 +21,25 @@ type ResponseType<T={}>= {
     fieldsErrors: Array<string>
     data: T
 }
+type TaskType={
+    description: string
+    title:string
+    completed: boolean
+    status: number
+    priority:number
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+
+}
+type ResponseTasksType ={
+    items: Array<TaskType>
+    error: (string)
+    totalCount: number
+}
 
 
 export const todolistAPI = {
@@ -36,5 +55,17 @@ export const todolistAPI = {
     updateTodolist(todolistId: string, title: string) {
         return  instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
         //return promise
+    },
+    getTasks(todolistId:string) {
+        return instance.get<ResponseTasksType>(`/todo-lists/${todolistId}/tasks`)
+    },
+    createTask(todolistId:string,title:string) {
+        return instance.post(`/todo-lists/${todolistId}/tasks`, {title})
+    },
+    deleteTask(todolistId:string,taskId:string) {
+        return instance.delete(`/todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    updateTask(todolistId:string, taskId:string) {
+        return instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`,{})
     }
 }
