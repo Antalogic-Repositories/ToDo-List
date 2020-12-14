@@ -19,7 +19,7 @@ export const GetTodolists = () => {
 
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
-    const [title, setTitle] = useState<any>(null)
+    const [title, setTitle] = useState<string>('')
     const createNewTodolist = () => {
         todolistAPI.createToDoList(title)
             .then((res) => {
@@ -37,8 +37,8 @@ export const CreateTodolist = () => {
 
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
-    const [todolistId, setTodolistId] = useState<any>(null)
-    const deleteTodoL=() => {
+    const [todolistId, setTodolistId] = useState<string>('')
+    const deleteTodoL = () => {
         todolistAPI.deleteToDoList(todolistId)
             .then((res) => {
                 setState(res.data);
@@ -46,18 +46,18 @@ export const DeleteTodolist = () => {
     }
     return <div>
         {JSON.stringify(state)}
-    <div>
-        <input placeholder={'write todolistId'} onChange={e => setTodolistId(e.currentTarget.value)}/>
-        <button onClick={deleteTodoL}>delete todolist</button>
-    </div>
+        <div>
+            <input placeholder={'write todolistId'} onChange={e => setTodolistId(e.currentTarget.value)}/>
+            <button onClick={deleteTodoL}>delete todolist</button>
+        </div>
     </div>
 }
 
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
-    const [todolistId, setTodolistId] = useState<any>(null)
-    const [title, setTitle] = useState<any>(null)
-    const updateTodoL=() => {
+    const [todolistId, setTodolistId] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
+    const updateTodoL = () => {
         todolistAPI.updateTodolist(todolistId, title)
             .then((res) => {
                 setState(res.data)
@@ -74,54 +74,98 @@ export const UpdateTodolistTitle = () => {
 //WORK WITH TASKS
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        let todolistId = '40935799-b048-4782-8cc4-9b9f1bdf13e5'
+    const [todolistId, setTodolistId] = useState<string>('')
+    const getTasksById = () => {
         todolistAPI.getTasks(todolistId)
             .then((res) => {
                 setState(res.data)
             })
-    }, [])
-
-    return <div> {JSON.stringify(state)}</div>
+    }
+    return <div> {JSON.stringify(state)}
+        <div>
+            <input onChange={e => setTodolistId(e.currentTarget.value)} value={todolistId}/>
+            <button onClick={getTasksById}>get tasks</button>
+        </div>
+    </div>
 }
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        let todolistId = '85d17727-cde2-4de3-9d4d-643a1fe47370'
-        let title = 'you did it'
+    const [todolistId, setTodolistId] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
+    const createNewTask = () => {
         todolistAPI.createTask(todolistId, title)
             .then((res) => {
                 setState(res.data)
             })
-    }, [])
-
-    return <div> {JSON.stringify(state)}</div>
+    }
+    return <div> {JSON.stringify(state)}
+        <div>
+            <input placeholder={'write todolistId'} onChange={e => setTodolistId(e.currentTarget.value)}
+                   value={todolistId}/>
+            <input placeholder={'write a new title'} onChange={e => setTitle(e.currentTarget.value)} value={title}/>
+            <button onClick={createNewTask}>create task</button>
+        </div>
+    </div>
 }
+
+
 export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        let todolistId = '85d17727-cde2-4de3-9d4d-643a1fe47370'
-        let taskId = 'b75345c0-58f6-4100-a0a5-ebb0b93d56aa'
+    const [todolistId, setTodolistId] = useState<string>('')
+    const [taskId, setTaskId] = useState<string>('')
+    const deleteSomeTask = () => {
         todolistAPI.deleteTask(todolistId, taskId)
             .then((res) => {
                 setState(res.data)
             })
-    }, [])
-
+    }
     return <div> {JSON.stringify(state)}
+        <div>
+            <input placeholder={'write todolistId'} onChange={e => setTodolistId(e.currentTarget.value)}/>
+            <input placeholder={'write taskId'} onChange={e => setTaskId(e.currentTarget.value)}/>
+            <button onClick={deleteSomeTask}>delete task</button>
+        </div>
     </div>
 }
 
 export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        let todolistId = '85d17727-cde2-4de3-9d4d-643a1fe47370'
-        let taskId = 'you did it'
-        todolistAPI.updateTask(todolistId, taskId)
+    const [title, setTitle] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
+    const [status, setStatus] = useState<number>(0)
+    const [priority, setPriority] = useState<number>(0)
+    const [startDate, setStartDate] = useState<string>('')
+    const [deadline, setDeadline] = useState<string>('')
+
+    const [todolistId, setTodolistId] = useState<string>('')
+    const [taskId, setTaskId] = useState<string>('')
+
+    const updateSomeTask = () => {
+        todolistAPI.updateTask(todolistId, taskId, {
+            title: title,
+            description: description,
+            status: status,
+            priority: priority,
+            startDate: startDate,
+            deadline: deadline
+        })
             .then((res) => {
                 setState(res.data)
             })
-    }, [])
+    }
 
-    return <div> {JSON.stringify(state)}</div>
+    return <div> {JSON.stringify(state)}
+        <div>
+            <input placeholder={'write todolistId'} onChange={e => setTodolistId(e.currentTarget.value)}/>
+            <input placeholder={'write taskId'} onChange={e => setTaskId(e.currentTarget.value)}/>
+
+            <input placeholder={'write title'} onChange={e => setTitle(e.currentTarget.value)}/>
+            <input placeholder={'write description'} onChange={e => setDescription(e.currentTarget.value)}/>
+            <input placeholder={'write status'} type={'number'} onChange={e => setStatus(+e.currentTarget.value)}/>
+            <input placeholder={'write priority'} type={'number'} onChange={e => setPriority(+e.currentTarget.value)}/>
+            <button onClick={updateSomeTask}>update task</button>
+        </div>
+    </div>
 }
+//PATCH-REQUEST  ЕСЛИ НУЖНО ОБНОВИТЬ КАКУЮ-ТО ЧАСТЬ ОБЬЕКТА
+//resultCode: 0  --- all right
