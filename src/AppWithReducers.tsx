@@ -17,7 +17,6 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksRed
 import {TaskStatuses, TaskType, TodoTaskPriorities} from './api/todolist-api';
 
 
-
 export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
@@ -65,8 +64,13 @@ function AppWithReducers() {
 
     })
 
+
     function addTask(title: string, toDoListID: string) {
-        dispatchTasks(addTaskAC(title, toDoListID))
+        const task = {
+            id: v1(), title: 'bread', status: TaskStatuses.New, todoListId: toDoListID2, addedDate: '',
+            deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low
+        }
+        dispatchTasks(addTaskAC(task))
     }
 
     function removeTask(taskID: string, toDoListID: string) {
