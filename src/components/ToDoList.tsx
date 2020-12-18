@@ -34,7 +34,7 @@ export const ToDoList = React.memo(function (props: PropsType) {
         props.addTask(title, props.id)
     }, [props.addTask, props.id])
     const changeToDoListTitle = useCallback((title: string) => {
-        props.changeToDoListTitle(title, props.id)
+        props.changeToDoListTitle(props.id,title,)
     }, [props.changeToDoListTitle, props.id])
     const onAllClickHandler = useCallback(() => {
         props.changeFilter('all', props.id)

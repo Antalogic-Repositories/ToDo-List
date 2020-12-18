@@ -5,20 +5,16 @@ import AddItemForm from './components/AddItemForm';
 import {Menu} from '@material-ui/icons';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {
-    AddToDoListAC,
+    addTodolistsTC,
     ChangeFilterTodolistAC,
-    ChangeTitleTodolistAC, fetchTodolistsTC,
+    ChangeTitleTodolistTC, fetchTodolistsTC,
     FilterValuesType,
-    RemoveToDoListAC,
+   removeTodolistsTC,
     TodolistDomainType
 } from './state/to-do-list-reducer';
 import {
-    addTaskAC,
     addTaskTC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
-    removeTaskAC,
-    removeTaskTC
+    removeTaskTC, updateTaskStatusTC, updateTaskTitleTC
 } from './state/tasks_reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
@@ -50,21 +46,20 @@ function AppWithRedux() {
     }, [dispatch])
 
     const changeTaskTitle = useCallback((taskId: string, title: string, toDoListID: string) => {
-        dispatch(changeTaskTitleAC(taskId, title, toDoListID))
+        dispatch(updateTaskTitleTC(taskId, title, toDoListID))
     }, [dispatch])
 
     const changeStatus = useCallback((taskId: string, status: TaskStatuses, toDoListID: string) => {
-        dispatch(changeTaskStatusAC(taskId, status, toDoListID))
+        debugger
+        dispatch(updateTaskStatusTC(taskId, toDoListID,status))
     }, [dispatch])
 
     const removeToDoList = useCallback((toDoListID: string) => {
-        dispatch(RemoveToDoListAC(toDoListID))
+        dispatch(removeTodolistsTC(toDoListID))
     }, [dispatch])
-    //action creator
-//от параметров не зависим
+
     const addToDoList = useCallback((title: string) => {
-        let action = AddToDoListAC(title)
-        dispatch(action)
+        dispatch(addTodolistsTC(title))
     }, [dispatch])
 
     const changeFilter = useCallback((value: FilterValuesType, toDoListID: string) => {
@@ -72,7 +67,7 @@ function AppWithRedux() {
     }, [dispatch])
 
     const changeToDoListTitle = useCallback((toDoListID: string, title: string) => {
-        dispatch(ChangeTitleTodolistAC(toDoListID, title))
+        dispatch(ChangeTitleTodolistTC(toDoListID, title))
     }, [dispatch])
 
     return (
