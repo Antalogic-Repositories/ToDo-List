@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import './App.css';
-import {ToDoList} from './components/ToDoList';
+import '../app/App.css';
+import {ToDoList} from '../components/ToDoList';
 import {v1} from 'uuid'
-import AddItemForm from './components/AddItemForm';
+import AddItemForm from '../components/AddItemForm';
 import {Menu} from '@material-ui/icons';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
-import {TaskStatuses, TaskType, TodoTaskPriorities} from './api/todolist-api';
-import {FilterValuesType, TodolistDomainType} from './state/to-do-list-reducer';
+import {TaskStatuses, TaskType, TodoTaskPriorities} from '../api/todolist-api';
+import {FilterValuesType, TodolistDomainType} from '../features/Todolists/to-do-list-reducer';
 
 //reducer  чистая функция, которая получает state и action и возвращет измененный стэйт
 
@@ -17,8 +17,8 @@ export type TaskStateType = {
 
 
 function App() {
-    let toDoListID1 = v1()
-    let toDoListID2 = v1()
+let toDoListID1= v1()
+    let toDoListID2=v1()
 
     let [toDoLists, setToDoLists] = useState<Array<TodolistDomainType>>([
         {id: toDoListID1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
@@ -151,8 +151,7 @@ function App() {
 
                                 <Grid item> {/* //ячейки*/}
                                     <Paper style={{padding: '15px'}} elevation={3}>
-                                        <ToDoList
-                                            id={tl.id}
+                                        <ToDoList id={tl.id}
                                             title={tl.title}
                                             tasks={tasksForToDoList}
                                             filter={tl.filter}
@@ -173,6 +172,7 @@ function App() {
         </div>
     );
 }
+
 
 //http://localhost:9009/iframe.html?id=todolists-additemform--add-item-form-example&viewMode=story
 //for snapshot

@@ -3,10 +3,10 @@ import AddItemForm from './AddItemForm';
 import EditAbleSpan from './EditAbleSpan';
 import {Button, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
-import Task from './Task';
+import Task from '../features/Todolists/Todolist/Task/Task';
 import {TaskStatuses, TaskType} from '../api/todolist-api';
-import {FilterValuesType} from '../state/to-do-list-reducer';
-import {fetchTasksTC} from '../state/tasks_reducer';
+import {FilterValuesType} from '../features/Todolists/to-do-list-reducer';
+import {fetchTasksTC} from '../features/Todolists/tasks_reducer';
 import {useDispatch} from 'react-redux';
 
 type PropsType = {
