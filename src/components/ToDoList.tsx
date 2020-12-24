@@ -12,6 +12,7 @@ import {useDispatch} from 'react-redux';
 type PropsType = {
     id: string
     title: string
+    entityStatus:null |string
     tasks: Array<TaskType>
     filter: FilterValuesType
     addTask: (title: string, toDoListID: string) => void
@@ -60,7 +61,9 @@ export const ToDoList = React.memo(function (props: PropsType) {
         <div>
             <h3>
                 <EditAbleSpan value={props.title} changeValue={changeToDoListTitle}/>
-                <IconButton onClick={() => {
+                <IconButton
+                    disabled={props.entityStatus==="loading"}
+                    onClick={() => {
                     props.removeToDoList(props.id)
                 }}><Delete/></IconButton>
 

@@ -17,12 +17,12 @@ export type TaskStateType = {
 
 
 function App() {
-let toDoListID1= v1()
-    let toDoListID2=v1()
+    let toDoListID1 = v1()
+    let toDoListID2 = v1()
 
     let [toDoLists, setToDoLists] = useState<Array<TodolistDomainType>>([
-        {id: toDoListID1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-        {id: toDoListID2, title: 'What to buy', filter: 'all', addedDate: '', order: 0},
+        {id: toDoListID1, title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle'},
+        {id: toDoListID2, title: 'What to buy', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle'},
     ])
     let [tasks, setTasks] = useState<TaskStateType>({
         [toDoListID1]:
@@ -56,8 +56,10 @@ let toDoListID1= v1()
 
     function addTask(title: string, toDoListID: string) {
         let toDoListTasks = tasks[toDoListID]
-        let newTask: TaskType = {id: v1(), title: title, status: TaskStatuses.New, todoListId: toDoListID, addedDate: '',
-            deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low}
+        let newTask: TaskType = {
+            id: v1(), title: title, status: TaskStatuses.New, todoListId: toDoListID, addedDate: '',
+            deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low
+        }
         tasks[toDoListID] = [newTask, ...toDoListTasks]
         setTasks({...tasks})
     }
@@ -74,8 +76,9 @@ let toDoListID1= v1()
             id: newToDoListId,
             title: title,
             filter: 'all',
-            addedDate:'',
-            order:0
+            addedDate: '',
+            order: 0,
+            entityStatus: 'idle'
         }
         setToDoLists([...toDoLists, newToDoList])
         setTasks({
@@ -95,7 +98,7 @@ let toDoListID1= v1()
         let toDoListTasks = tasks[toDoListID]
         let task = toDoListTasks.find(t => t.id === taskId)
         if (task) {
-            task.status=status;
+            task.status = status;
             setTasks({...tasks})
 
         }
@@ -152,16 +155,17 @@ let toDoListID1= v1()
                                 <Grid item> {/* //ячейки*/}
                                     <Paper style={{padding: '15px'}} elevation={3}>
                                         <ToDoList id={tl.id}
-                                            title={tl.title}
-                                            tasks={tasksForToDoList}
-                                            filter={tl.filter}
-                                            addTask={addTask}
-                                            removeTask={removeTask}
-                                            changeFilter={changeFilter}
-                                            changeStatus={changeStatus}
-                                            removeToDoList={removeToDoList}
-                                            changeTaskTitle={changeTaskTitle}
-                                            changeToDoListTitle={changeToDoListTitle}
+                                                  title={tl.title}
+                                                  entityStatus={tl.entityStatus}
+                                                  tasks={tasksForToDoList}
+                                                  filter={tl.filter}
+                                                  addTask={addTask}
+                                                  removeTask={removeTask}
+                                                  changeFilter={changeFilter}
+                                                  changeStatus={changeStatus}
+                                                  removeToDoList={removeToDoList}
+                                                  changeTaskTitle={changeTaskTitle}
+                                                  changeToDoListTitle={changeToDoListTitle}
                                         />
                                     </Paper>
                                 </Grid>
