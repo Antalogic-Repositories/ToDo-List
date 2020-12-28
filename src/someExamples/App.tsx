@@ -28,21 +28,21 @@ function App() {
         [toDoListID1]:
             [{
                 id: v1(), title: 'HTML&CSS', status: TaskStatuses.Completed, todoListId: toDoListID1, addedDate: '',
-                deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low
+                deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low, entityStatus: 'idle'
             },
                 {
                     id: v1(), title: 'JS', status: TaskStatuses.Completed, todoListId: toDoListID1, addedDate: '',
-                    deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low
+                    deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low,entityStatus: 'idle'
                 },
             ],
         [toDoListID2]:
             [{
                 id: v1(), title: 'grape', status: TaskStatuses.Completed, todoListId: toDoListID2, addedDate: '',
-                deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low
+                deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low, entityStatus: 'idle'
             },
                 {
                     id: v1(), title: 'bread', status: TaskStatuses.Completed, todoListId: toDoListID2, addedDate: '',
-                    deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low
+                    deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low, entityStatus: 'idle'
                 },
             ],
 
@@ -58,7 +58,7 @@ function App() {
         let toDoListTasks = tasks[toDoListID]
         let newTask: TaskType = {
             id: v1(), title: title, status: TaskStatuses.New, todoListId: toDoListID, addedDate: '',
-            deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low
+            deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low,entityStatus: 'idle'
         }
         tasks[toDoListID] = [newTask, ...toDoListTasks]
         setTasks({...tasks})

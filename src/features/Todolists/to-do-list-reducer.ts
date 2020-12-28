@@ -1,6 +1,7 @@
 import {todolistAPI, TodolistType} from '../../api/todolist-api';
 import {Dispatch} from 'redux';
 import {RequestStatusType, setAppErrorAC, setAppStatusAC} from '../../app/app-reducer';
+import {handleServerNetworkError} from '../../utils/error-utils';
 
 
 //reducer принимает state & action возвращает newState
@@ -71,6 +72,9 @@ export const removeTodolistsTC = (todolistId: string) => (dispatch: Dispatch<Act
             dispatch(removeToDoListAC(todolistId))
             dispatch(setAppStatusAC('succeeded'))
         })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
 }
 
 export const addTodolistsTC = (title: string) => (dispatch: Dispatch<ActionsType>) => {
@@ -90,6 +94,9 @@ export const addTodolistsTC = (title: string) => (dispatch: Dispatch<ActionsType
                 dispatch(setAppStatusAC('failed'))
             }
         })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
 }
 
 export const changeTitleTodolistTC = (todolistId: string, title: string,) => (dispatch: Dispatch<ActionsType>) => {
@@ -99,7 +106,11 @@ export const changeTitleTodolistTC = (todolistId: string, title: string,) => (di
             dispatch(changeTitleTodolistAC(todolistId, title))
             dispatch(setAppStatusAC('succeeded'))
         })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
 }
+
 
 //types
 type ActionsType =

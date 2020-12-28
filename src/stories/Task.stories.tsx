@@ -16,14 +16,14 @@ const changeTaskTitleCallback = action('Title changed inside Task')
 
 const Template: Story<TaskPropsType> = (args) => <div>
     <Task task={{id: '1', status: TaskStatuses.Completed, title: 'css', todoListId: 'todolist1', addedDate: '',
-        deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low}}
+        deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low, entityStatus: 'idle'} }
           toDoListID={'todolist1'}
           removeTask={removeCallback}
           changeStatus={changeStatusCallback}
           changeTaskTitle={changeTaskTitleCallback}/>
 
     <Task task={{id: '2', status: TaskStatuses.New, title: 'js',todoListId: 'todolist1', addedDate: '',
-        deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low}}
+        deadline: '', description: '', startDate: '', order: 0, priority: TodoTaskPriorities.Low, entityStatus: 'idle'}}
           toDoListID={'todolist2'}
           removeTask={removeCallback}
           changeStatus={changeStatusCallback}
