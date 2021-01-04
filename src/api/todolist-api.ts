@@ -35,11 +35,23 @@ export const todolistAPI = {
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<ResponseType<TaskType>>(`/todo-lists/${todolistId}/tasks/${taskId}`, model)
+    },
+}
+export const authAPI = {
+    login(data:LoginParamsType) {
+        return instance.post<ResponseType<{userId?:number}>>('auth/login', data)
     }
 }
 
 
 //types
+export type LoginParamsType ={
+    email:string
+    password: string
+    rememberMe?: boolean
+    captcha?:string
+}
+
 export type TodolistType = {
     id: string
     addedDate: string

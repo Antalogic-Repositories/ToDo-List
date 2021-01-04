@@ -8,7 +8,8 @@ import {useSelector} from 'react-redux';
 import {AppRootStateType} from './store';
 import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
-
+import {Route, Switch} from 'react-router-dom';
+import {Login} from '../features/Login/Login';
 
 
 export type TaskStateType = {
@@ -18,7 +19,7 @@ export type TaskStateType = {
 
 function App() {
     //1.type of state, 2. what you need
-const status = useSelector<AppRootStateType,RequestStatusType>(state => state.app.status)
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     return (
         <div className="App">
             <ErrorSnackbar/>
@@ -33,9 +34,14 @@ const status = useSelector<AppRootStateType,RequestStatusType>(state => state.ap
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-            {status=== 'loading' && <LinearProgress color="secondary"/> }
+            {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
-                <TodolistsList/>
+                <Switch>
+                    <Route exact path={'/'} render={() => <TodolistsList/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
+                    <Route path={'*'} to={'/404'}/>
+                </Switch>
             </Container>
         </div>
     );

@@ -49,7 +49,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                 error={!!error}//строку в лог значение, в итоге дает тру
             />
             <IconButton onClick={onAddTaskClick} color={'primary'} disabled={props.disabled}><AddBox/></IconButton>
-            {error && <div className={'error-message'}>{error}</div>}
+            {/*{error && <div className={'error-message'}>{error}</div>}*/}
         </div>
     )
 });
