@@ -4,6 +4,8 @@ import {RequestStatusType, setAppErrorAC, setAppStatusAC} from '../../app/app-re
 import {handleServerNetworkError} from '../../utils/error-utils';
 
 
+
+
 //reducer принимает state & action возвращает newState
 //action содержит необходимые превращения и нужные для него данные
 //creator для вызова action
@@ -62,6 +64,9 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch<ActionsType>) => {
             dispatch(setTodolistsAC(res.data))
             dispatch(setAppStatusAC('succeeded'))
         })
+        .catch(error =>{
+            handleServerNetworkError(error,dispatch)
+        })
 }
 
 export const removeTodolistsTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
@@ -82,7 +87,6 @@ export const addTodolistsTC = (title: string) => (dispatch: Dispatch<ActionsType
     todolistAPI.createToDoList(title)
         .then((res) => {
             if (res.data.resultCode === 0) {
-                const task = res.data.data.item
                 dispatch(addToDoListAC(res.data.data.item))
                 dispatch(setAppStatusAC('succeeded'))
             } else {

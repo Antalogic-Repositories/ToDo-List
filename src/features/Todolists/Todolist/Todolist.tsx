@@ -1,7 +1,10 @@
 import React, {useCallback, useEffect} from 'react';
 import {
-    addTodolistsTC, changeFilterTodolistAC, changeTitleTodolistTC,
-    fetchTodolistsTC, FilterValuesType,
+    addTodolistsTC,
+    changeFilterTodolistAC,
+    changeTitleTodolistTC,
+    fetchTodolistsTC,
+    FilterValuesType,
     removeTodolistsTC,
     TodolistDomainType
 } from '../to-do-list-reducer';
@@ -13,15 +16,20 @@ import {Grid, Paper} from '@material-ui/core';
 import AddItemForm from '../../../components/AddItemForm';
 import {ToDoList} from '../../../components/ToDoList';
 import {TaskStateType} from '../../../app/App';
+import {Redirect} from 'react-router-dom';
 
 
-export const TodolistsList: React.FC = ()=> {
+export const TodolistsList: React.FC = () => {
     useEffect(() => {
-    dispatch(fetchTodolistsTC())
-}, [])
+        if (!isLoggedIn) {
+            return
+        }
+        dispatch(fetchTodolistsTC())
+    }, [])
 
     let toDoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     let dispatch = useDispatch()
 
     const addTask = useCallback((title: string, toDoListID: string) => {
@@ -55,6 +63,10 @@ export const TodolistsList: React.FC = ()=> {
     const changeToDoListTitle = useCallback((toDoListID: string, title: string) => {
         dispatch(changeTitleTodolistTC(toDoListID, title))
     }, [dispatch])
+
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'}/>
+    }
     return <>
         <Grid style={{padding: '15px'}}>
             <AddItemForm addItem={addToDoList}/>
