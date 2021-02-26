@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/it-incubator-todolist-ts/static/css/main.f9609cda.chunk.css",
-    "main.js": "/it-incubator-todolist-ts/static/js/main.bfc49f4c.chunk.js",
-    "main.js.map": "/it-incubator-todolist-ts/static/js/main.bfc49f4c.chunk.js.map",
+    "main.js": "/it-incubator-todolist-ts/static/js/main.491116cf.chunk.js",
+    "main.js.map": "/it-incubator-todolist-ts/static/js/main.491116cf.chunk.js.map",
     "runtime-main.js": "/it-incubator-todolist-ts/static/js/runtime-main.f8216a61.js",
     "runtime-main.js.map": "/it-incubator-todolist-ts/static/js/runtime-main.f8216a61.js.map",
     "static/js/2.d650be86.chunk.js": "/it-incubator-todolist-ts/static/js/2.d650be86.chunk.js",
     "static/js/2.d650be86.chunk.js.map": "/it-incubator-todolist-ts/static/js/2.d650be86.chunk.js.map",
     "index.html": "/it-incubator-todolist-ts/index.html",
-    "precache-manifest.dc0228bc8e958cb3284c2e96d80880ee.js": "/it-incubator-todolist-ts/precache-manifest.dc0228bc8e958cb3284c2e96d80880ee.js",
+    "precache-manifest.9622b7e5156755a7179bc365f86c485f.js": "/it-incubator-todolist-ts/precache-manifest.9622b7e5156755a7179bc365f86c485f.js",
     "service-worker.js": "/it-incubator-todolist-ts/service-worker.js",
     "static/css/main.f9609cda.chunk.css.map": "/it-incubator-todolist-ts/static/css/main.f9609cda.chunk.css.map",
     "static/js/2.d650be86.chunk.js.LICENSE.txt": "/it-incubator-todolist-ts/static/js/2.d650be86.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.f8216a61.js",
     "static/js/2.d650be86.chunk.js",
     "static/css/main.f9609cda.chunk.css",
-    "static/js/main.bfc49f4c.chunk.js"
+    "static/js/main.491116cf.chunk.js"
   ]
 }
