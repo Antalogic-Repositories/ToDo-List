@@ -67,6 +67,7 @@ function App() {
             <Container fixed>
                 <Switch>
                     <Route exact path={'/'} render={() => <Redirect to={'/todolist'}/>}/>
+                    <Route exact path={'/it-incubator-todolist-ts'} render={() => <Redirect to={'/todolist'}/>}/>
                     <Route path={'/todolist'} render={() => <TodolistsList/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>
                     <Route path={'/404'} render={() => <div>404 NOT FOUND</div>}/>
