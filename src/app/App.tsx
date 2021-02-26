@@ -31,7 +31,7 @@ function App() {
     //1.type of state, 2. what you need
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const isLoggedIn=useSelector<AppRootStateType,boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -66,9 +66,10 @@ function App() {
             {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
                 <Switch>
-                    <Route exact path={'/'} render={() => <TodolistsList/>}/>
+                    <Route exact path={'/'} render={() => <Redirect to={'/todolist'}/>}/>
+                    <Route path={'/todolist'} render={() => <TodolistsList/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>
-                    <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
+                    <Route path={'/404'} render={() => <div>404 NOT FOUND</div>}/>
                     <Redirect from={'*'} to={'/404'}/>
                 </Switch>
             </Container>
