@@ -15,11 +15,12 @@ import {TaskType} from '../api/todolist-api';
 import {TodolistsList} from '../features/Todolists/Todolist/Todolist';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './store';
-import {initializeAppTC, RequestStatusType} from './app-reducer';
+import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
 import {logoutTC} from '../features/Login/authReducer';
+import {initializeAppSagaAA} from './app-sagas';
 
 
 export type TaskStateType = {
@@ -35,7 +36,7 @@ function App() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(initializeAppTC())
+        dispatch(initializeAppSagaAA() )
     }, [])
 
     const logoutHandler = useCallback(() => {
