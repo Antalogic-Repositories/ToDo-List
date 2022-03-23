@@ -94,7 +94,7 @@ export const removeTaskTC = (taskId: string, todolistId: string) =>
             dispatch(removeTaskAC(taskId, todolistId))
             dispatch(setAppStatusAC('succeeded'))
         } catch (error) {
-            handleServerNetworkError(error, dispatch)
+            handleServerNetworkError(error as Error, dispatch)
         }
     }
 
