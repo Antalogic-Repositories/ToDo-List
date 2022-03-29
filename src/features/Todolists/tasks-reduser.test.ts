@@ -98,7 +98,7 @@ test('correct task should be deleted from correct array', () => {
     //ассоциативный массив
     //можно использовать экшионы из другого редьюсера
 
-    const action = removeTaskAC("2", "todolistId2");
+    const action = removeTaskAC({taskId: "2", todoListId: "todolistId2"});
     const endState = tasksReducer(startState, action)
     //every = метод массива
     expect(endState["todolistId1"].length).toBe(3);
@@ -108,7 +108,7 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
     //const action = addTaskAC("juce", "todolistId2");
-    const action = addTaskAC({
+    const action = addTaskAC({task:{
         todoListId: "todolistId2",
         title: "juce",
         status: TaskStatuses.New,
@@ -120,7 +120,7 @@ test('correct task should be added to correct array', () => {
         startDate: "",
         id: "id exists",
         entityStatus: 'idle'
-    });
+    }});
 
     const endState = tasksReducer(startState, action)
 
@@ -132,7 +132,7 @@ test('correct task should be added to correct array', () => {
 });
 
 test('status of specified task should be changed', () => {
-    const action = updateTaskAC("2", {status: TaskStatuses.New}, "todolistId2");
+    const action = updateTaskAC({taskId:"2", model: {status: TaskStatuses.New}, todoListId: "todolistId2"});
 
     const endState = tasksReducer(startState, action)
 
@@ -141,7 +141,7 @@ test('status of specified task should be changed', () => {
 });
 
 test('title of specified task should be changed', () => {
-    const action = updateTaskAC("2", {title: "yogurt"}, "todolistId2");
+    const action = updateTaskAC({ taskId:"2", model: {title: "yogurt"}, todoListId:"todolistId2"});
 
     const endState = tasksReducer(startState, action)
 
@@ -176,7 +176,7 @@ test('new array should be added when new todolist is added', () => {
 
 test('property with todolistId should be deleted', () => {
 
-    const action = removeToDoListAC({id:"todolistId2"});
+    const action = removeToDoListAC({id: "todolistId2"});
     // @ts-ignore
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState);
