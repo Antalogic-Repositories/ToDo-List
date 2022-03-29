@@ -95,6 +95,7 @@ beforeEach(() => {
 })
 
 test('correct task should be deleted from correct array', () => {
+    debugger
     //ассоциативный массив
     //можно использовать экшионы из другого редьюсера
 
@@ -160,7 +161,7 @@ test('new array should be added when new todolist is added', () => {
         }
     });
 
-    // @ts-ignore
+
     const endState = tasksReducer(startState, action)
 
 
@@ -177,7 +178,6 @@ test('new array should be added when new todolist is added', () => {
 test('property with todolistId should be deleted', () => {
 
     const action = removeToDoListAC({id: "todolistId2"});
-    // @ts-ignore
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState);
     expect(keys.length).toBe(1);
